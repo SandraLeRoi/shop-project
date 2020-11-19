@@ -11,7 +11,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9ce6697d-bb78-47bf-b8ff-0cf8a5dc224d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/Entity/LineOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/LineOrder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Product.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Product.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -153,7 +153,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1605775343782</updated>
-      <workItem from="1605775344869" duration="3736000" />
+      <workItem from="1605775344869" duration="5282000" />
     </task>
     <servers />
   </component>
