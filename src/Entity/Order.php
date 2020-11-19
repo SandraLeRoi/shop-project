@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\OrderRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -32,6 +34,21 @@ class Order
      * @ORM\Column(type="datetime")
      */
     private $date;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="commande")
+     */
+    private $user;
+
+    /**
+     * @ORM\OneToMany(targetEntity=LineOrder::class, mappedBy="numOrder", orphanRemoval=true)
+     */
+    private $orderLine;
+
+    public function __construct()
+    {
+        $this->orderLine = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -70,6 +87,48 @@ class Order
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|LineOrder[]
+     */
+    public function getOrderLine(): Collection
+    {
+        return $this->orderLine;
+    }
+
+    public function addOrderLine(LineOrder $orderLine): self
+    {
+        if (!$this->orderLine->contains($orderLine)) {
+            $this->orderLine[] = $orderLine;
+            $orderLine->setNumOrder($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderLine(LineOrder $orderLine): self
+    {
+        if ($this->orderLine->removeElement($orderLine)) {
+            // set the owning side to null (unless already changed)
+            if ($orderLine->getNumOrder() === $this) {
+                $orderLine->setNumOrder(null);
+            }
+        }
 
         return $this;
     }

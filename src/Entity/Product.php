@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProductRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -46,6 +48,16 @@ class Product
      * @ORM\Column(type="integer", nullable=true)
      */
     private $stock;
+
+    /**
+     * @ORM\OneToMany(targetEntity=LineOrder::class, mappedBy="product", orphanRemoval=true)
+     */
+    private $lineOrder;
+
+    public function __construct()
+    {
+        $this->lineOrder = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -120,6 +132,36 @@ class Product
     public function setStock(?int $stock): self
     {
         $this->stock = $stock;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|LineOrder[]
+     */
+    public function getLineOrder(): Collection
+    {
+        return $this->lineOrder;
+    }
+
+    public function addLineOrder(LineOrder $lineOrder): self
+    {
+        if (!$this->lineOrder->contains($lineOrder)) {
+            $this->lineOrder[] = $lineOrder;
+            $lineOrder->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLineOrder(LineOrder $lineOrder): self
+    {
+        if ($this->lineOrder->removeElement($lineOrder)) {
+            // set the owning side to null (unless already changed)
+            if ($lineOrder->getProduct() === $this) {
+                $lineOrder->setProduct(null);
+            }
+        }
 
         return $this;
     }
