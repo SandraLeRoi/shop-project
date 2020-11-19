@@ -9,6 +9,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=LineOrderRepository::class)
+ *  @ApiResource(
+ *      collectionOperations={
+ *     }, itemOperations={
+ *     "get"
+ *     }
+ * )
  */
 class LineOrder
 {

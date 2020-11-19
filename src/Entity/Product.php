@@ -7,12 +7,23 @@ use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=ProductRepository::class)
  * @ApiResource(
- *
- * )
+ *      collectionOperations={
+ *     "get"={
+ *          "normalization_context"={
+ *              "groups"= {"order_details"}
+ *          }}, "post"
+ *     }, itemOperations={
+ *     "get"={
+ *          "normalization_context"={
+ *              "groups"= {"order_details"}
+ *          }
+ *     }, "put"
+ * })
  */
 class Product
 {
@@ -25,21 +36,25 @@ class Product
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"order_details"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"order_details"})
      */
     private $reference;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @Groups({"order_details"})
      */
     private $puht;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"order_details"})
      */
     private $description;
 
