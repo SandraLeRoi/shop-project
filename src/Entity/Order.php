@@ -7,13 +7,21 @@ use App\Repository\OrderRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=OrderRepository::class)
  * @ORM\Table(name="`order`")
- * @ApiResource(
-
- *     )
+ *  @ApiResource(
+ *      collectionOperations={
+ *     "post"
+ *     }, itemOperations={
+ *     "get"={
+ *          "normalization_context"={
+ *              "groups"= {"order_details"}
+ *          }
+ *     }, "put"
+ * })
  */
 class Order
 {
@@ -26,6 +34,7 @@ class Order
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"order_details"})
      */
     private $numero;
 
@@ -36,16 +45,19 @@ class Order
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"order_details"})
      */
     private $date;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="commande")
+     * @Groups({"order_details"})
      */
     private $user;
 
     /**
      * @ORM\OneToMany(targetEntity=LineOrder::class, mappedBy="numOrder", orphanRemoval=true)
+     * @Groups({"order_details"})
      */
     private $orderLine;
 

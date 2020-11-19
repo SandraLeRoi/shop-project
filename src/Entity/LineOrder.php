@@ -5,6 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\LineOrderRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=LineOrderRepository::class)
@@ -20,6 +21,7 @@ class LineOrder
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"order_details"})
      */
     private $quantity;
 
@@ -32,6 +34,7 @@ class LineOrder
     /**
      * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="lineOrder")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"order_details"})
      */
     private $product;
 
